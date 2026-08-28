@@ -66,7 +66,7 @@ public class GtaControlsProfile {
         ControlElement btnSprint = new ControlElement(null);
         btnSprint.setType(ControlElement.Type.BUTTON);
         btnSprint.setText("SPRINT");
-        btnSprint.setBindingAt(0, Binding.KEY_SHIFT_LEFT);
+        btnSprint.setBindingAt(0, Binding.KEY_SHIFT_L);
         btnSprint.setX((short) 1160);
         btnSprint.setY((short) 580);
         btnSprint.setScale(1.1f);
@@ -126,7 +126,7 @@ public class GtaControlsProfile {
         ControlElement btnEsc = new ControlElement(null);
         btnEsc.setType(ControlElement.Type.BUTTON);
         btnEsc.setText("ESC");
-        btnEsc.setBindingAt(0, Binding.KEY_ESCAPE);
+        btnEsc.setBindingAt(0, Binding.KEY_ESC);
         btnEsc.setX((short) 1220);
         btnEsc.setY((short) 70);
         btnEsc.setScale(0.85f);
