@@ -252,10 +252,10 @@ public abstract class FileUtils {
     }
 
     public static String getDirname(String path) {
-        if (path == null) return "";
+        if (path == null || path.isEmpty()) return "";
         path = StringUtils.removeEndSlash(path);
         int index = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
-        return path.substring(0, index);
+        return index >= 0 ? path.substring(0, index) : "";
     }
 
     public static void chmod(File file, int mode) {

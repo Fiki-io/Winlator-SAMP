@@ -966,8 +966,13 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
             }
         }
 
-        if (execPath != null) {
+        if (execPath != null && !execPath.isEmpty()) {
             String execDir = FileUtils.getDirname(execPath);
+            if (execDir.isEmpty() && execPath.length() >= 2 && execPath.charAt(1) == ':') {
+                execDir = execPath.substring(0, 2);
+            }
+            if (execDir.isEmpty()) execDir = "C:\\";
+
             String filename = FileUtils.getName(execPath);
             int dotIndex, spaceIndex;
             if ((dotIndex = filename.lastIndexOf(".")) != -1 && (spaceIndex = filename.indexOf(" ", dotIndex)) != -1) {

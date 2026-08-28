@@ -273,6 +273,11 @@ public abstract class WineUtils {
     }
 
     public static String unixToDOSPath(String unixPath, Container container) {
+        if (unixPath == null || unixPath.isEmpty()) return "";
+        if (unixPath.length() >= 2 && Character.isLetter(unixPath.charAt(0)) && unixPath.charAt(1) == ':') {
+            return unixPath;
+        }
+
         String dosPath = "";
         String driveLetter = "";
 
