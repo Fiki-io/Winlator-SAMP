@@ -22,33 +22,56 @@ import java.util.Locale;
 public abstract class WineUtils {
     public static void createDosdevicesSymlinks(Container container, boolean addDriveCDRom) {
         File rootDir = container.getRootDir();
-        String dosdevicesPath = (new File(rootDir, ".wine/dosdevices")).getPath();
-        File[] files = (new File(dosdevicesPath)).listFiles();
-        if (files != null) for (File file : files) if (file.getName().matches("[a-z]:")) file.delete();
-
-        FileUtils.symlink("../drive_c", dosdevicesPath+"/c:");
-        FileUtils.symlink("../../../../", dosdevicesPath+"/z:");
-
-        if (addDriveCDRom) {
-            File driveX = new File(rootDir, ".wine/drive_x");
-            if (!driveX.isDirectory()) {
-                driveX.mkdir();
-                FileUtils.chmod(driveX, 0771);
-            }
-
-            String serial = String.format(Locale.ENGLISH, "%-8x", (int)'X').replace(' ', '0');
-            FileUtils.writeString(new File(driveX, ".windows-serial"), serial+"\n");
-            FileUtils.symlink("../drive_x", dosdevicesPath+"/x:");
+        ArrayList<File> dosdevicesDirs = new ArrayList<>();
+        dosdevicesDirs.add(new File(rootDir, ".wine/dosdevices"));
+        File xuserWine = new File(rootDir.getParentFile(), "xuser/.wine/dosdevices");
+        if (!xuserWine.equals(dosdevicesDirs.get(0))) {
+            dosdevicesDirs.add(xuserWine);
         }
 
-        for (Drive drive : container.drivesIterator()) {
-            File linkTarget = new File(drive.path);
-            String path = linkTarget.getAbsolutePath();
-            if (!linkTarget.isDirectory() && path.startsWith(AppUtils.INTERNAL_STORAGE)) {
-                linkTarget.mkdirs();
-                FileUtils.chmod(linkTarget, 0771);
+        for (File dosdevicesDir : dosdevicesDirs) {
+            if (!dosdevicesDir.isDirectory()) dosdevicesDir.mkdirs();
+
+            File[] files = dosdevicesDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.getName().matches("^[a-z]:.*")) {
+                        try {
+                            android.system.Os.unlink(file.getPath());
+                        }
+                        catch (Exception e) {
+                            file.delete();
+                        }
+                    }
+                }
             }
-            FileUtils.symlink(path, dosdevicesPath+"/"+drive.letter.toLowerCase(Locale.ENGLISH)+":");
+
+            File driveC = new File(rootDir, ".wine/drive_c");
+            if (!driveC.isDirectory()) driveC.mkdirs();
+            FileUtils.symlink("../drive_c", dosdevicesDir.getPath()+"/c:");
+            FileUtils.symlink("/", dosdevicesDir.getPath()+"/z:");
+
+            if (addDriveCDRom) {
+                File driveX = new File(rootDir, ".wine/drive_x");
+                if (!driveX.isDirectory()) {
+                    driveX.mkdir();
+                    FileUtils.chmod(driveX, 0771);
+                }
+
+                String serial = String.format(Locale.ENGLISH, "%-8x", (int)'X').replace(' ', '0');
+                FileUtils.writeString(new File(driveX, ".windows-serial"), serial+"\n");
+                FileUtils.symlink("../drive_x", dosdevicesDir.getPath()+"/x:");
+            }
+
+            for (Drive drive : container.drivesIterator()) {
+                File linkTarget = new File(drive.path);
+                String path = linkTarget.getAbsolutePath();
+                if (!linkTarget.isDirectory() && path.startsWith(AppUtils.INTERNAL_STORAGE)) {
+                    linkTarget.mkdirs();
+                    FileUtils.chmod(linkTarget, 0771);
+                }
+                FileUtils.symlink(path, dosdevicesDir.getPath()+"/"+drive.letter.toLowerCase(Locale.ENGLISH)+":");
+            }
         }
     }
 

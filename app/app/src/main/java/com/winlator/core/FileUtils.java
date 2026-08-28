@@ -101,10 +101,15 @@ public abstract class FileUtils {
 
     public static void symlink(String linkTarget, String linkFile) {
         try {
-            (new File(linkFile)).delete();
+            try {
+                Os.unlink(linkFile);
+            }
+            catch (Exception ignored) {
+                (new File(linkFile)).delete();
+            }
             Os.symlink(linkTarget, linkFile);
         }
-        catch (ErrnoException e) {}
+        catch (Exception e) {}
     }
 
     public static boolean isSymlink(File file) {
