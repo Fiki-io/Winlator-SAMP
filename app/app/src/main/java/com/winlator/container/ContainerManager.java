@@ -68,7 +68,7 @@ public class ContainerManager {
         container.setRootDir(new File(homeDir, RootFS.USER+"-"+container.id));
         File file = new File(homeDir, RootFS.USER);
         try {
-            android.system.Os.unlink(file.getPath());
+            android.system.Os.remove(file.getPath());
         }
         catch (Exception ignored) {
             file.delete();

@@ -102,7 +102,7 @@ public abstract class FileUtils {
     public static void symlink(String linkTarget, String linkFile) {
         try {
             try {
-                Os.unlink(linkFile);
+                Os.remove(linkFile);
             }
             catch (Exception ignored) {
                 (new File(linkFile)).delete();

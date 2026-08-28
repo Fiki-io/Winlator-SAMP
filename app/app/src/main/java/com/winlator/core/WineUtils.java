@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
 
@@ -37,7 +38,7 @@ public abstract class WineUtils {
                 for (File file : files) {
                     if (file.getName().matches("^[a-z]:.*")) {
                         try {
-                            android.system.Os.unlink(file.getPath());
+                            android.system.Os.remove(file.getPath());
                         }
                         catch (Exception e) {
                             file.delete();
