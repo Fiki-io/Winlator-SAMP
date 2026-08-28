@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#121418"
+    android:padding="12dp">
+
+    <!-- Top Header Card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#1E222B"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="System &amp; Crash Logs"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_log_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#2C3240"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+        </LinearLayout>
+
+        <!-- Search / Filter Input -->
+        <EditText
+            android:id="@+id/et_log_filter"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="#2C3240"
+            android:hint="Filter logs (e.g. FATAL, Crash, Box64, Error, EGL)..."
+            android:textColorHint="#8892B0"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:singleLine="true" />
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btn_copy_log"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="📋 Copy All"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2E7D32"
+                android:layout_marginEnd="6dp" />
+
+            <Button
+                android:id="@+id/btn_refresh_log"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="🔄 Refresh"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1976D2"
+                android:layout_marginEnd="6dp" />
+
+            <Button
+                android:id="@+id/btn_share_log"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="📤 Share"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#0288D1"
+                android:layout_marginEnd="6dp" />
+
+            <Button
+                android:id="@+id/btn_clear_log"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="🗑️ Clear"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#C62828" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Status & Line Counter -->
+    <TextView
+        android:id="@+id/tv_log_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading logs..."
+        android:textColor="#8892B0"
+        android:textSize="11sp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Terminal Log Output Area -->
+    <ScrollView
+        android:id="@+id/scroll_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#0A0C10"
+        android:padding="8dp">
+
+        <HorizontalScrollView
+            android:id="@+id/scroll_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_log_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#C5D1EB"
+                android:textSize="12sp"
+                android:typeface="monospace"
+                android:textIsSelectable="true"
+                android:text="Log output will appear here." />
+        </HorizontalScrollView>
+    </ScrollView>
+</LinearLayout>

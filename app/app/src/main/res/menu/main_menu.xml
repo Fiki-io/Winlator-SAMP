@@ -8,6 +8,7 @@
         <item android:icon="@drawable/icon_input_controls" android:id="@+id/menu_item_input_controls" android:title="@string/input_controls" />
         <item android:icon="@drawable/icon_container" android:id="@+id/menu_item_containers" android:title="Containers" />
         <item android:icon="@drawable/icon_settings" android:id="@+id/menu_item_settings" android:title="@string/settings" />
+        <item android:icon="@drawable/icon_debug" android:id="@+id/menu_item_logs" android:title="System &amp; Crash Logs" />
         <item android:icon="@drawable/icon_about" android:id="@+id/menu_item_about" android:title="@string/about" />
     </group>
 </menu>
