@@ -416,6 +416,13 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
         if (environment != null) environment.stopEnvironmentComponents();
 
         Intent intent = getIntent();
+        if (intent.getBooleanExtra("is_samp", false)) {
+            AppUtils.RestartApplicationOptions options = new AppUtils.RestartApplicationOptions();
+            options.selectedMenuItemId = R.id.menu_item_samp_hub;
+            AppUtils.restartApplication(this, options);
+            return;
+        }
+
         if (intent.hasExtra("exec_path")) {
             AppUtils.RestartApplicationOptions options = new AppUtils.RestartApplicationOptions();
             options.containerId = container.id;
@@ -972,6 +979,7 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
                 execDir = execPath.substring(0, 2);
             }
             if (execDir.isEmpty()) execDir = "C:\\";
+            if (execDir.endsWith(":")) execDir += "\\";
 
             String filename = FileUtils.getName(execPath);
             int dotIndex, spaceIndex;

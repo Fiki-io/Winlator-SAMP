@@ -135,7 +135,7 @@ public class SampLauncherManager {
 
         // Map Drive D to the GTA Game path
         String gamePath = SampGameValidator.getGamePath(context);
-        container.setDrives("D:" + gamePath + "E:" + gamePath);
+        container.setDrives("D:" + gamePath + "E:" + com.winlator.core.AppUtils.INTERNAL_STORAGE);
     }
 
     private static void launchActivity(Context context, Container container, SampServer server, String password) {
