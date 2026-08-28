@@ -111,6 +111,9 @@ public class InputControlsView extends View {
         if (profile != null) {
             if (!profile.isElementsLoaded()) profile.loadElements(this);
             List<ControlElement> elements = profile.getElements();
+            for (ControlElement element : elements) {
+                if (element.getInputControlsView() == null) element.setInputControlsView(this);
+            }
             if (touchpadView != null && elements.isEmpty()) touchpadView.setPointerButtonRightEnabled(true);
             if (showTouchscreenControls) for (ControlElement element : elements) element.draw(canvas);
         }
@@ -210,6 +213,9 @@ public class InputControlsView extends View {
     public synchronized void setProfile(ControlsProfile profile) {
         if (profile != null) {
             this.profile = profile;
+            for (ControlElement element : profile.getElements()) {
+                element.setInputControlsView(this);
+            }
             deselectAllElements();
         }
         else this.profile = null;

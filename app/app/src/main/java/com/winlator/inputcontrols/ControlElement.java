@@ -423,7 +423,16 @@ public class ControlElement {
         }
     }
 
+    public void setInputControlsView(InputControlsView inputControlsView) {
+        this.inputControlsView = inputControlsView;
+    }
+
+    public InputControlsView getInputControlsView() {
+        return inputControlsView;
+    }
+
     public void draw(Canvas canvas) {
+        if (inputControlsView == null) return;
         int snappingSize = inputControlsView.getSnappingSize();
         Paint paint = inputControlsView.getPaint();
         int lightColor = getLightColor();

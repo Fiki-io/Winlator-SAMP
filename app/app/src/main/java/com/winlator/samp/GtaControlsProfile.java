@@ -133,6 +133,7 @@ public class GtaControlsProfile {
         profile.addElement(btnEsc);
 
         profile.save();
+        profile.loadElements(null);
         return profile;
     }
 }
