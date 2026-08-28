@@ -95,7 +95,12 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
         envVars.put("USER", RootFS.USER);
         envVars.put("TMPDIR", rootDir+"/tmp");
         envVars.put("DISPLAY", ":0");
-        envVars.put("PATH", rootDir+rootFS.getWinePath()+"/bin:"+rootDir+"/usr/local/bin:"+rootDir+"/usr/bin");
+        String winePath = rootDir+rootFS.getWinePath();
+        envVars.put("PATH", winePath+"/bin:"+rootDir+"/usr/local/bin:"+rootDir+"/usr/bin");
+        envVars.put("WINEDLLPATH", winePath+"/lib/wine");
+        envVars.put("WINELOADER", winePath+"/bin/wine");
+        envVars.put("WINESERVER", winePath+"/bin/wineserver");
+        envVars.put("WINEDATADIR", winePath+"/share/wine");
         envVars.put("LD_LIBRARY_PATH", rootFS.getLibDir().getPath());
         envVars.put("BOX64_LD_LIBRARY_PATH", rootDir+"/lib/x86_64-linux-gnu");
         envVars.put("ANDROID_SYSVSHM_SERVER", rootDir+UnixSocketConfig.SYSVSHM_SERVER_PATH);
