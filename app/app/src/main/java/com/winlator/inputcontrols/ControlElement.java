@@ -779,9 +779,12 @@ public class ControlElement {
 
             elementJSONObject.put("bindings", bindingsJSONArray);
             elementJSONObject.put("scale", Float.valueOf(scale));
-            if (opacity < 1.0f) elementJSONObject.put("opacity", Float.valueOf(opacity));
-            elementJSONObject.put("x", (float)x / inputControlsView.getMaxWidth());
-            elementJSONObject.put("y", (float)y / inputControlsView.getMaxHeight());
+            int maxWidth = inputControlsView != null ? inputControlsView.getMaxWidth() : 1280;
+            int maxHeight = inputControlsView != null ? inputControlsView.getMaxHeight() : 720;
+            if (maxWidth <= 0) maxWidth = 1280;
+            if (maxHeight <= 0) maxHeight = 720;
+            elementJSONObject.put("x", (float)x / maxWidth);
+            elementJSONObject.put("y", (float)y / maxHeight);
             elementJSONObject.put("toggleSwitch", propertyFlags.isSet(FLAG_TOGGLE_SWITCH));
             elementJSONObject.put("text", text);
             elementJSONObject.put("iconId", iconId);
