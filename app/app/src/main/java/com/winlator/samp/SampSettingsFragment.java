@@ -26,6 +26,7 @@ import androidx.preference.PreferenceManager;
 import com.winlator.R;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class SampSettingsFragment extends Fragment {
     private EditText etNickname;
@@ -156,22 +157,57 @@ public class SampSettingsFragment extends Fragment {
 
     private void showFolderSuggestDialog() {
         if (getContext() == null) return;
-        String extStorage = Environment.getExternalStorageDirectory().getAbsolutePath();
-        String[] suggestions = {
-            extStorage + "/GTASA",
-            extStorage + "/GTA_SA",
-            extStorage + "/Download/GTASA",
-            extStorage + "/Android/data/com.winlator/files/GTASA",
-            extStorage + "/GTA San Andreas"
-        };
+        showFolderBrowserDialog(Environment.getExternalStorageDirectory());
+    }
 
-        new AlertDialog.Builder(getContext())
-            .setTitle("Pilih Lokasi Folder GTA SA")
-            .setItems(suggestions, (dialog, which) -> {
-                etGamePath.setText(suggestions[which]);
-            })
-            .setNegativeButton("Cancel", null)
-            .show();
+    private void showFolderBrowserDialog(final File currentDir) {
+        if (getContext() == null || currentDir == null) return;
+        
+        File[] rawFiles = currentDir.listFiles();
+        ArrayList<File> dirs = new ArrayList<>();
+        if (rawFiles != null) {
+            for (File f : rawFiles) {
+                if (f.isDirectory() && !f.isHidden()) dirs.add(f);
+            }
+            dirs.sort((a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+        }
+
+        ArrayList<String> items = new ArrayList<>();
+        items.add("📁 [PILIH FOLDER INI: " + currentDir.getName() + "]");
+        if (currentDir.getParentFile() != null && !currentDir.getAbsolutePath().equals("/storage/emulated/0")) {
+            items.add("⬅️ [Kembali ke Folder Atas]");
+        }
+
+        for (File dir : dirs) {
+            boolean hasGta = SampGameValidator.isValidGtaFolder(dir);
+            items.add((hasGta ? "⭐ " : "📁 ") + dir.getName() + (hasGta ? " (GTA SA Terdeteksi!)" : ""));
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(currentDir.getAbsolutePath());
+        builder.setItems(items.toArray(new String[0]), (dialog, which) -> {
+            String selected = items.get(which);
+            if (selected.startsWith("📁 [PILIH FOLDER INI")) {
+                etGamePath.setText(currentDir.getAbsolutePath());
+            }
+            else if (selected.startsWith("⬅️ [Kembali")) {
+                showFolderBrowserDialog(currentDir.getParentFile());
+            }
+            else {
+                int dirIdx = which - (items.get(1).startsWith("⬅️") ? 2 : 1);
+                if (dirIdx >= 0 && dirIdx < dirs.size()) {
+                    File nextDir = dirs.get(dirIdx);
+                    if (SampGameValidator.isValidGtaFolder(nextDir)) {
+                        etGamePath.setText(nextDir.getAbsolutePath());
+                    }
+                    else {
+                        showFolderBrowserDialog(nextDir);
+                    }
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
     }
 
     private void saveSettings() {

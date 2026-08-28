@@ -195,7 +195,17 @@ public class SampHubFragment extends Fragment {
         btnConnect.setOnClickListener(v -> {
             String gamePath = SampGameValidator.getGamePath(getContext());
             if (!SampGameValidator.isValidGtaFolder(new File(gamePath))) {
-                Toast.makeText(getContext(), "GTA SA files not found! Set game directory in Settings tab.", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+                new AlertDialog.Builder(getContext())
+                    .setTitle("Folder GTA SA Belum Dipilih")
+                    .setMessage("File gta_sa.exe tidak ditemukan di: \n" + gamePath + "\n\nSilakan pilih folder instalasi GTA SA kamu di tab Pengaturan.")
+                    .setPositiveButton("Buka Pengaturan", (d, w) -> {
+                        if (getActivity() instanceof MainActivity) {
+                            ((MainActivity) getActivity()).showFragment(new SampSettingsFragment());
+                        }
+                    })
+                    .setNegativeButton("Tutup", null)
+                    .show();
                 return;
             }
 

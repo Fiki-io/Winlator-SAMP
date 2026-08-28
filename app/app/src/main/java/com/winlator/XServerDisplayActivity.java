@@ -488,6 +488,12 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
         envVars.put("MESA_NO_ERROR", "1");
         envVars.put("WINEPREFIX", rootPath+RootFS.WINEPREFIX);
         envVars.put("WINE_DO_NOT_CREATE_DXGI_DEVICE_MANAGER", "1");
+        envVars.put("WINEDLLOVERRIDES", "mscoree,mshtml=d");
+
+        FileUtils.writeString(new File(rootPath, RootFS.WINEPREFIX+"/.update-timestamp"), "disable\n");
+        if (container != null && container.getRootDir() != null) {
+            FileUtils.writeString(new File(container.getRootDir(), ".wine/.update-timestamp"), "disable\n");
+        }
 
         boolean enableWineDebug = preferences.getBoolean("enable_wine_debug", false);
         String wineDebugChannels = preferences.getString("wine_debug_channels", SettingsFragment.DEFAULT_WINE_DEBUG_CHANNELS);
