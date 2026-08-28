@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="?attr/colorSecondarySurface">
+
+    <TextView
+        android:id="@+id/TVDetailHostname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SA-MP Server Hostname"
+        android:textColor="?attr/colorPrimaryText"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="6dp" />
+
+    <TextView
+        android:id="@+id/TVDetailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="127.0.0.1:7777"
+        android:textColor="?attr/colorSecondaryText"
+        android:textSize="13sp"
+        android:layout_marginBottom="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="6dp">
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="Players:"
+            android:textColor="?attr/colorSecondaryText"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/TVDetailPlayers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 / 0"
+            android:textColor="?attr/colorPrimaryText"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="6dp">
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="Ping:"
+            android:textColor="?attr/colorSecondaryText"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/TVDetailPing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-- ms"
+            android:textColor="#4CAF50"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="6dp">
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="Gamemode:"
+            android:textColor="?attr/colorSecondaryText"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/TVDetailGamemode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textColor="?attr/colorPrimaryText"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="Map:"
+            android:textColor="?attr/colorSecondaryText"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/TVDetailMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textColor="?attr/colorPrimaryText"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/ETServerPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Server Password (optional)"
+        android:textColor="?attr/colorPrimaryText"
+        android:textColorHint="?attr/colorSecondaryText"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/BTDeleteServer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:textColor="#ef5350"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/BTDetailCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textColor="?attr/colorSecondaryText"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/BTConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="▶ CONNECT"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="?attr/colorAccent"
+            android:paddingHorizontal="16dp" />
+    </LinearLayout>
+</LinearLayout>

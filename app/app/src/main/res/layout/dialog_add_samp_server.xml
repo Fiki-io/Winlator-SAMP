@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?attr/colorSecondarySurface">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add SA-MP Server"
+        android:textColor="?attr/colorPrimaryText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Server IP / Domain:"
+        android:textColor="?attr/colorSecondaryText"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/ETServerIp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="e.g. 185.169.134.67 or play.valrise-indo.com"
+        android:textColor="?attr/colorPrimaryText"
+        android:textColorHint="?attr/colorSecondaryText"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Port (default: 7777):"
+        android:textColor="?attr/colorSecondaryText"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/ETServerPort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="7777"
+        android:inputType="number"
+        android:textColor="?attr/colorPrimaryText"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/BTCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="?attr/colorSecondaryText"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/BTAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Server"
+            android:textColor="#FFFFFF"
+            android:background="?attr/colorAccent" />
+    </LinearLayout>
+</LinearLayout>

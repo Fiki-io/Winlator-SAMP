@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimarySurface"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SA-MP Launcher Settings"
+            android:textColor="?attr/colorPrimaryText"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Player Nickname Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?attr/colorSecondarySurface"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Nickname"
+                android:textColor="?attr/colorPrimaryText"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama karakter SA-MP Anda (contoh: Bryan_Smith)"
+                android:textColor="?attr/colorSecondaryText"
+                android:textSize="12sp"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/ETNickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Player_Android"
+                android:singleLine="true"
+                android:textColor="?attr/colorPrimaryText"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- GTA SA Game Location Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?attr/colorSecondarySurface"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Direktori Game GTA San Andreas"
+                android:textColor="?attr/colorPrimaryText"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVPathStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status: Checking..."
+                android:textColor="#4CAF50"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/ETGamePath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="?attr/colorPrimaryText"
+                android:textSize="13sp"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/BTSelectFolder"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="📁 Browse Folder"
+                android:textColor="#FFFFFF"
+                android:background="?attr/colorPrimaryVariant"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Graphics Engine & Renderer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?attr/colorSecondarySurface"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Graphics Engine (Renderer)"
+                android:textColor="?attr/colorPrimaryText"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pilih jalur render sesuai chipset (Auto direkomendasikan)"
+                android:textColor="?attr/colorSecondaryText"
+                android:textSize="12sp"
+                android:layout_marginBottom="8dp" />
+
+            <Spinner
+                android:id="@+id/SPRenderer"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+
+        <!-- Resolution & FPS Limit -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?attr/colorSecondarySurface"
+            android:padding="14dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resolusi &amp; FPS"
+                android:textColor="?attr/colorPrimaryText"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Game Screen Size:"
+                android:textColor="?attr/colorSecondaryText"
+                android:textSize="13sp" />
+
+            <Spinner
+                android:id="@+id/SPScreenSize"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginBottom="8dp"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FPS Limit:"
+                android:textColor="?attr/colorSecondaryText"
+                android:textSize="13sp" />
+
+            <Spinner
+                android:id="@+id/SPFpsLimit"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/BTSaveSettings"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="💾 Save Settings"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:background="?attr/colorAccent" />
+    </LinearLayout>
+</ScrollView>
