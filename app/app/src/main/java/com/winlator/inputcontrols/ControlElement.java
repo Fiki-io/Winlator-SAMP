@@ -75,7 +75,7 @@ public class ControlElement {
             return names;
         }
     }
-    private final InputControlsView inputControlsView;
+    private InputControlsView inputControlsView;
     private Type type = Type.BUTTON;
     private Shape shape = Shape.CIRCLE;
     private Binding[] bindings = {Binding.NONE, Binding.NONE, Binding.NONE, Binding.NONE};
