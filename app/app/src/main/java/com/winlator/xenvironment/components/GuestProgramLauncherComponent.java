@@ -140,7 +140,11 @@ public class GuestProgramLauncherComponent extends EnvironmentComponent {
         int box64Logs = preferences.getInt("box64_logs", 0);
         boolean saveToFile = preferences.getBoolean("save_logs_to_file", false);
 
-        envVars.put("BOX64_NOBANNER", box64Logs >= 1 ? "0" : "1");
+        envVars.put("BOX64_NOBANNER", "0");
+        envVars.put("BOX64_LOG", "1");
+        envVars.put("BOX64_SHOWSEGV", "1");
+        envVars.put("BOX64_SHOWBT", "1");
+        envVars.put("BOX64_DYNAREC_MISSING", "1");
         envVars.put("BOX64_DYNAREC", "1");
         envVars.put("BOX64_UNITYPLAYER", "0");
         envVars.put("BOX64_DYNACACHE", "0");

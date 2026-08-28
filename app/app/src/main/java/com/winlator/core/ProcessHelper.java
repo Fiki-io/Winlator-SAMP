@@ -65,26 +65,32 @@ public abstract class ProcessHelper {
     public static int exec(String command, EnvVars envVars, File workingDir, Callback<Integer> terminationCallback) {
         int pid = -1;
         try {
-            ProcessBuilder processBuilder = (new ProcessBuilder(splitCommand(command))).directory(workingDir);
-            if (debugCallbacks.isEmpty()) processBuilder.redirectOutput(new File("/dev/null")).redirectErrorStream(true);
+            AppCrashHandler.logEngine(">>> Executing: " + command);
+            if (workingDir != null) AppCrashHandler.logEngine("    Working Dir: " + workingDir.getAbsolutePath());
+            if (envVars != null) AppCrashHandler.logEngine("    Env Vars: " + envVars.toString());
 
+            ProcessBuilder processBuilder = (new ProcessBuilder(splitCommand(command))).directory(workingDir);
             Map<String, String> environment = processBuilder.environment();
-            for (String name : envVars) environment.put(name, envVars.get(name));
+            if (envVars != null) {
+                for (String name : envVars) environment.put(name, envVars.get(name));
+            }
 
             java.lang.Process process = processBuilder.start();
             Field pidField = process.getClass().getDeclaredField("pid");
             pidField.setAccessible(true);
             pid = pidField.getInt(process);
             pidField.setAccessible(false);
+            AppCrashHandler.logEngine(">>> Process started with PID: " + pid);
 
-            if (!debugCallbacks.isEmpty()) {
-                createDebugThread(process.getInputStream());
-                createDebugThread(process.getErrorStream());
-            }
+            createDebugThread(process.getInputStream());
+            createDebugThread(process.getErrorStream());
 
             if (terminationCallback != null) createWaitForThread(process, terminationCallback);
         }
-        catch (Exception e) {}
+        catch (Exception e) {
+            AppCrashHandler.logEngine(">>> Failed to execute process: " + e.getMessage());
+            android.util.Log.e("ProcessHelper", "Failed to exec command: " + command, e);
+        }
         return pid;
     }
 
@@ -93,15 +99,15 @@ public abstract class ProcessHelper {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
+                    AppCrashHandler.logEngine(line);
                     synchronized (debugCallbacks) {
                         if (!debugCallbacks.isEmpty()) {
                             for (Callback<String> callback : debugCallbacks) callback.call(line);
                         }
-                        else if (MainActivity.DEBUG_MODE) System.out.println(line);
                     }
                 }
             }
-            catch (IOException e) {}
+            catch (IOException ignored) {}
         });
     }
 
@@ -109,9 +115,10 @@ public abstract class ProcessHelper {
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
                 int status = process.waitFor();
+                AppCrashHandler.logEngine(">>> Process exited with code: " + status);
                 terminationCallback.call(status);
             }
-            catch (InterruptedException e) {}
+            catch (InterruptedException ignored) {}
         });
     }
 
@@ -159,7 +166,13 @@ public abstract class ProcessHelper {
             else {
                 nextChar = i < count-1 ? command.charAt(i+1) : '\0';
                 if (currChar == ' ' || (currChar == '\\' && nextChar == ' ')) {
-                    if (currChar == '\\') {
+                    if (currChar == '\\' && nextChar == ' ' && value.endsWith(":")) {
+                        value += '\\';
+                        result.add(value);
+                        value = "";
+                        i++;
+                    }
+                    else if (currChar == '\\') {
                         value += ' ';
                         i++;
                     }

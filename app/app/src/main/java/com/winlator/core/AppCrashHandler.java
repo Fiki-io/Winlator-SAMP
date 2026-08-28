@@ -19,6 +19,9 @@ public class AppCrashHandler implements Thread.UncaughtExceptionHandler {
     private static final String TAG = "AppCrashHandler";
     private static final String CRASH_LOG_FILENAME = "crash_log.txt";
     private static final String LATEST_LOG_FILENAME = "latest_log.txt";
+    private static final String ENGINE_LOG_FILENAME = "engine_log.txt";
+    private static final int MAX_ENGINE_LOGS = 2000;
+    private static final java.util.LinkedList<String> engineLogsBuffer = new java.util.LinkedList<>();
     private static AppCrashHandler instance;
     private final Context context;
     private final Thread.UncaughtExceptionHandler defaultHandler;
@@ -26,6 +29,37 @@ public class AppCrashHandler implements Thread.UncaughtExceptionHandler {
     private AppCrashHandler(Context context) {
         this.context = context.getApplicationContext();
         this.defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+    }
+
+    public static synchronized void logEngine(String line) {
+        if (line == null) return;
+        String timestamp = new SimpleDateFormat("HH:mm:ss.SSS", Locale.US).format(new Date());
+        String formattedLine = "[" + timestamp + "] " + line;
+        
+        synchronized (engineLogsBuffer) {
+            engineLogsBuffer.add(formattedLine);
+            if (engineLogsBuffer.size() > MAX_ENGINE_LOGS) {
+                engineLogsBuffer.removeFirst();
+            }
+        }
+        Log.i("WinlatorEngine", line);
+    }
+
+    public String getEngineLog() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== BOX64 & WINE LIVE ENGINE LOGS ===\n");
+        sb.append("Total lines captured: ").append(engineLogsBuffer.size()).append("\n\n");
+        synchronized (engineLogsBuffer) {
+            if (engineLogsBuffer.isEmpty()) {
+                sb.append("No engine output captured yet.\nStart a container or SA-MP game to see live Box64 & Wine execution logs here.\n");
+            }
+            else {
+                for (String l : engineLogsBuffer) {
+                    sb.append(l).append("\n");
+                }
+            }
+        }
+        return sb.toString();
     }
 
     public static synchronized void init(Context context) {

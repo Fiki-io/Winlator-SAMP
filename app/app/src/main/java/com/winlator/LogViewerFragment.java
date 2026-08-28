@@ -40,6 +40,7 @@ public class LogViewerFragment extends Fragment {
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     private static final String[] LOG_TYPES = {
+        "Box64 & Wine Live Engine Console",
         "Recent Logcat (All System/Engine)",
         "Previous Crash Report",
         "System & Engine Diagnostics"
@@ -126,14 +127,20 @@ public class LogViewerFragment extends Fragment {
             }
 
             switch (mode) {
+                case 0:
+                    log = crashHandler.getEngineLog();
+                    break;
                 case 1:
-                    log = crashHandler.getCrashLog();
+                    log = crashHandler.getRecentLogcat(500);
                     break;
                 case 2:
+                    log = crashHandler.getCrashLog();
+                    break;
+                case 3:
                     log = crashHandler.getDeviceDiagnostics();
                     break;
                 default:
-                    log = crashHandler.getRecentLogcat(500);
+                    log = crashHandler.getEngineLog();
                     break;
             }
 
