@@ -142,55 +142,32 @@ public abstract class ProcessHelper {
 
     public static String[] splitCommand(String command) {
         ArrayList<String> result = new ArrayList<>();
-        boolean startedQuotes = false;
-        String value = "";
-        char currChar, nextChar;
+        if (command == null || command.isEmpty()) return new String[0];
+        
+        StringBuilder current = new StringBuilder();
+        boolean inQuotes = false;
+        
         for (int i = 0, count = command.length(); i < count; i++) {
-            currChar = command.charAt(i);
-
-            if (startedQuotes) {
-                if (currChar == '"') {
-                    startedQuotes = false;
-                    if (!value.isEmpty()) {
-                        value += '"';
-                        result.add(value);
-                        value = "";
-                    }
-                }
-                else value += currChar;
+            char c = command.charAt(i);
+            
+            if (c == '"') {
+                inQuotes = !inQuotes;
             }
-            else if (currChar == '"') {
-                startedQuotes = true;
-                value += '"';
+            else if (c == ' ' && !inQuotes) {
+                if (current.length() > 0) {
+                    result.add(current.toString());
+                    current.setLength(0);
+                }
             }
             else {
-                nextChar = i < count-1 ? command.charAt(i+1) : '\0';
-                if (currChar == ' ' || (currChar == '\\' && nextChar == ' ')) {
-                    if (currChar == '\\' && nextChar == ' ' && value.endsWith(":")) {
-                        value += '\\';
-                        result.add(value);
-                        value = "";
-                        i++;
-                    }
-                    else if (currChar == '\\') {
-                        value += ' ';
-                        i++;
-                    }
-                    else if (!value.isEmpty()) {
-                        result.add(value);
-                        value = "";
-                    }
-                }
-                else {
-                    value += currChar;
-                    if (i == count-1) {
-                        result.add(value);
-                        value = "";
-                    }
-                }
+                current.append(c);
             }
         }
-
+        
+        if (current.length() > 0) {
+            result.add(current.toString());
+        }
+        
         return result.toArray(new String[0]);
     }
 

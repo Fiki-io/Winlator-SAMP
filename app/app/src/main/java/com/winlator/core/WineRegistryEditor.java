@@ -68,11 +68,15 @@ public class WineRegistryEditor implements Closeable {
     public WineRegistryEditor(File file) {
         this.file = file;
         cloneFile = FileUtils.createTempFile(file.getParentFile(), FileUtils.getBasename(file.getPath()));
-        if (!file.isFile()) {
-            try {
-                cloneFile.createNewFile();
+        if (!file.isFile() || file.length() == 0) {
+            String header = "WINE REGISTRY Version 2\n#arch=win64\n\n";
+            if (file.getName().contains("system")) {
+                header = "WINE REGISTRY Version 2\n#arch=win64\n;; All keys relative to \\\\Machine\n\n";
             }
-            catch (IOException e) {}
+            else if (file.getName().contains("user")) {
+                header = "WINE REGISTRY Version 2\n#arch=win64\n;; All keys relative to \\\\User\\\\S-1-5-21-0-0-0-1000\n\n";
+            }
+            FileUtils.writeString(cloneFile, header);
         }
         else FileUtils.copy(file, cloneFile);
     }

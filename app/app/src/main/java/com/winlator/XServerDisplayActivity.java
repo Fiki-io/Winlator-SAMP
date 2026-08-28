@@ -987,10 +987,10 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
                 execArgs = filename.substring(spaceIndex+1)+execArgs;
                 filename = filename.substring(0, spaceIndex);
             }
-            cmdArgs = "/dir "+StringUtils.escapeDOSPath(execDir)+" \""+filename+"\""+execArgs;
+            cmdArgs = "/dir \""+execDir+"\" \""+filename+"\""+execArgs;
         }
 
-        if (cmdArgs.isEmpty()) cmdArgs = "/dir C:\\windows \"wfm.exe\"";
+        if (cmdArgs.isEmpty()) cmdArgs = "/dir \"C:\\windows\" \"wfm.exe\"";
 
         if (overrideEnvVars != null && overrideEnvVars.has("EXTRA_EXEC_ARGS")) {
             cmdArgs += " "+overrideEnvVars.get("EXTRA_EXEC_ARGS");

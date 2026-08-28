@@ -120,6 +120,7 @@ public abstract class WineUtils {
     public static void applyGtaOptimizations(Container container) {
         if (container == null || container.getRootDir() == null) return;
         File userRegFile = new File(container.getRootDir(), ".wine/user.reg");
+        if (!userRegFile.exists()) return;
         final String dllOverridesKey = "Software\\Wine\\DllOverrides";
         final String direct3DKey = "Software\\Wine\\Direct3D";
 
