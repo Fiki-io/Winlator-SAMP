@@ -36,7 +36,42 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug --stacktrace --no-daemon
 
-      - name: Upload APK Artifact
+      - name: Upload APK to GoFile
+        id: upload_gofile
+        run: |
+          python3 -c "
+          import urllib.request, json, subprocess, glob, os
+
+          apks = glob.glob('app/app/build/outputs/apk/debug/*.apk')
+          if not apks:
+              print('No APK found!')
+              exit(1)
+
+          apk_path = apks[0]
+          print(f'Uploading {apk_path} to GoFile...')
+
+          res = urllib.request.urlopen('https://api.gofile.io/servers').read()
+          server = json.loads(res)['data']['servers'][0]['name']
+          print(f'Target server: {server}')
+
+          cmd = f'curl -s -F \"file=@{apk_path}\" https://{server}.gofile.io/contents/uploadfile'
+          p = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+          data = json.loads(p.stdout)
+
+          if data.get('status') == 'ok':
+              download_page = data['data']['downloadPage']
+              print('\n=============================================')
+              print(f'🎉 GOFILE DOWNLOAD LINK: {download_page}')
+              print('=============================================\n')
+              summary_file = os.environ.get('GITHUB_STEP_SUMMARY')
+              if summary_file:
+                  with open(summary_file, 'a') as f:
+                      f.write(f'# 📥 Winlator SA-MP APK Download\n\n**Direct GoFile Link:** [{download_page}]({download_page})\n')
+          else:
+              print('GoFile upload failed:', p.stdout)
+          "
+
+      - name: Upload APK Artifact (GitHub Backup)
         uses: actions/upload-artifact@v4
         with:
           name: Winlator-SAMP-Debug-APK
