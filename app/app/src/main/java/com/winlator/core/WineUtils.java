@@ -242,12 +242,7 @@ public abstract class WineUtils {
 
         EnvVars envVars = new EnvVars();
         envVars.put("WINEPREFIX", rootDir+RootFS.WINEPREFIX);
-        String winePath = rootDir+rootFS.getWinePath();
-        envVars.put("WINEDLLPATH", winePath+"/lib/wine");
-        envVars.put("WINELOADER", winePath+"/bin/wine");
-        envVars.put("WINESERVER", winePath+"/bin/wineserver");
-        envVars.put("WINEDATADIR", winePath+"/share/wine");
-        envVars.put("WINEDLLOVERRIDES", "mscoree=d;mshtml=d");
+        envVars.put("WINEDLLOVERRIDES", "mscoree,mshtml=d");
 
         XEnvironment environment = new XEnvironment(context, rootFS);
         GuestProgramLauncherComponent guestProgramLauncherComponent = new GuestProgramLauncherComponent();
